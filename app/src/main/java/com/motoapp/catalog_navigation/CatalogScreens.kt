@@ -1,18 +1,37 @@
 package com.motoapp.catalog_navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.motoapp.models.ListOfModelsOfBrand
 import com.motoapp.ui.theme.Green04
+import com.motoapp.ui.theme.Green08
+import com.motoapp.ui.theme.Green10
+import com.motoapp.ui.theme.Green30
+import com.motoapp.ui.theme.Green50
+import com.motoapp.ui.theme.Green70
 
 //ScreenCatalogHome: CatalogItem("catalogHome")
 //    object ScreenByType: CatalogItem("catalogByType")
@@ -28,23 +47,27 @@ fun CatalogHomeScreen(navController: NavController) {
         contentAlignment = Alignment.Center
     ){
         Column(
-            modifier = Modifier.padding(vertical = 8.dp)
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "CatalogHomeScreen"
+                text = "CatalogHomeScreen",
+                modifier = Modifier.padding(bottom = 16.dp)
             )
             val listOfCatalogHomeScreens = listOf(
                 CatalogItem.ScreenByType,
                 CatalogItem.ScreenByBrand
             )
 
-            Column() {
-                listOfCatalogHomeScreens.forEach { item ->
-                    OutlinedButton(onClick = {
+            listOfCatalogHomeScreens.forEach { item ->
+                OutlinedButton(
+                    onClick = {
                         navController.navigate(item.route)
-                    }) {
-                        Text(text = item.route)
-                    }
+                    },
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green30)
+                ) {
+                    Text(text = item.route)
                 }
             }
         }
@@ -61,36 +84,56 @@ fun ByTypeScreen(navController: NavController) {
             .background(Green04),
         contentAlignment = Alignment.Center
     ){
-        Column() {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Text(
-                text = "ByTypeScreen"
+                text = "ByTypeScreen",
+                modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            OutlinedButton(onClick = {
-                navController.navigate(CatalogItem.ScreenCatalogHome.route)
-            }) {
+            OutlinedButton(
+                onClick = { navController.navigate(CatalogItem.ScreenCatalogHome.route) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
                 Text(text = "MX CROSS")
             }
-            OutlinedButton(onClick = {
-                navController.navigate(CatalogItem.ScreenCatalogHome.route)
-            }) {
+            OutlinedButton(
+                onClick = { navController.navigate(CatalogItem.ScreenCatalogHome.route) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
                 Text(text = "Enduro")
             }
-            OutlinedButton(onClick = {
-                navController.navigate(CatalogItem.ScreenCatalogHome.route)
-            }) {
+            OutlinedButton(
+                onClick = { navController.navigate(CatalogItem.ScreenCatalogHome.route) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
                 Text(text = "Supermoto")
             }
-            OutlinedButton(onClick = {
-                navController.navigate(CatalogItem.ScreenCatalogHome.route)
-            }) {
+            OutlinedButton(
+                onClick = { navController.navigate(CatalogItem.ScreenCatalogHome.route) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
                 Text(text = "ATV")
             }
 
-            OutlinedButton(onClick = {
-                navController.popBackStack()
-            }) {
-                Text(text = "Back to home")
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(top = 8.dp),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green50)
+            ) {
+                Text(text = "Back")
             }
         }
 
@@ -106,10 +149,333 @@ fun ByBrandScreen(navController: NavController) {
             .background(Green04),
         contentAlignment = Alignment.Center
     ){
-        Column() {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
             Text(
-                text = "ByBrandScreen"
+                text = "ByBrandScreen",
+                modifier = Modifier.padding(bottom = 16.dp)
             )
+
+            OutlinedButton(
+                onClick = { navController.navigate(CatalogItem.ScreenKtmModels.route) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
+                Text(text = "KTM")
+            }
+
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
+                Text(text = "HUSQVARNA")
+            }
+
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
+                Text(text = "GAS GAS")
+            }
+
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green30)
+            ) {
+                Text(text = "HONDA")
+            }
+
+
+
+
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(top = 8.dp),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.elevatedButtonColors(Green50)
+            ) {
+                Text(text = "Back")
+            }
+        }
+
+    }
+}
+
+@Composable
+fun KtmScreen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 80.dp)
+            .fillMaxSize()
+            .background(Green04),
+        contentAlignment = Alignment.Center
+    ){
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = "KTM",
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+            }
+            item {
+                Text(text = "4 STROKE", Modifier.padding(vertical = 8.dp))
+            }
+            itemsIndexed(
+                listOf(
+                    ListOfModelsOfBrand("450 SX-F 2024","ktm450SXF2024"),
+                    ListOfModelsOfBrand("350 SX-F 2024","ktm350SXF2024"),
+                    ListOfModelsOfBrand("250 SX-F 2024","ktm250SXF2024"),
+                    ListOfModelsOfBrand("450 SX-F FACTORY EDITION 2023","ktm450SXFFactoryEdition2024"),
+                )
+            ) {index, item ->
+                OutlinedButton(
+                    onClick = { navController.navigate(item.route) },
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green30)
+                ) {
+                    Text(text = item.title)
+                }
+            }
+            item {
+                Text(text = "2 STROKE", Modifier.padding(vertical = 8.dp))
+            }
+            itemsIndexed(
+                listOf(
+                    "300 SX 2024", "250 SX 2024", "125 SX 2024", "85 SX 19/16 2024",
+                    "85 SX 17/14 2024", "65 SX 2023", "50 SX FACTORY EDITION 2023",
+                    "50 SX 2023", "50 SX MINI 2023"
+                )
+            ) {index, item ->
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green30)
+                ) {
+                    Text(text = item)
+                }
+            }
+            item {
+                Text(text = "ELECTRIC", Modifier.padding(vertical = 8.dp))
+            }
+            itemsIndexed(
+                listOf("SX-E 5 2024", "SX-E 3 2024")
+            ) {index, item ->
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green30)
+                ) {
+                    Text(text = item)
+                }
+            }
+            item {
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+                ) {
+                    Text(text = "Back")
+                }
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun Ktm450SXF2024Screen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 80.dp)
+            .fillMaxSize()
+            .background(Green04),
+        contentAlignment = Alignment.Center
+    ){
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = "KTM 450 SX-F 2024",
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+            }
+            item {
+                AsyncImage(
+                    model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_496212-MY24-KTM-450-SX-F-90-Right-Studio_%23SALL_%23AEPI_%23V1.png",
+                    contentDescription = null,
+                )
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+                ) {
+                    Text(text = "Back")
+                }
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun Ktm350SXF2024Screen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 80.dp)
+            .fillMaxSize()
+            .background(Green04),
+        contentAlignment = Alignment.Center
+    ){
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = "KTM 350 SX-F 2024",
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+            }
+            item {
+                AsyncImage(
+                    model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_496204-MY24-KTM-350-SX-F-90-Right-Studio_%23SALL_%23AEPI_%23V1.png",
+                    contentDescription = null,
+                )
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+                ) {
+                    Text(text = "Back")
+                }
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun Ktm250SXF2024Screen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 80.dp)
+            .fillMaxSize()
+            .background(Green04),
+        contentAlignment = Alignment.Center
+    ){
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = "KTM 250 SX-F 2024",
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+            }
+            item {
+                AsyncImage(
+                    model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_496197-MY24-KTM-250-SX-F-90-Right-Studio_%23SALL_%23AEPI_%23V1.png",
+                    contentDescription = null,
+                )
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+                ) {
+                    Text(text = "Back")
+                }
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun Ktm450SXFFactoryEdition2024Screen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 80.dp)
+            .fillMaxSize()
+            .background(Green04),
+        contentAlignment = Alignment.Center
+    ){
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = "KTM 450 SX-F FACTORY EDITION 2023",
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+            }
+            item {
+                AsyncImage(
+                    model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_M23-450-SX-F-FactoryEdition-90-Degree-Right_%23SALL_%23AEPI_%23V1.png",
+                    contentDescription = null,
+                )
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+                ) {
+                    Text(text = "Back")
+                }
+            }
+
         }
 
     }
