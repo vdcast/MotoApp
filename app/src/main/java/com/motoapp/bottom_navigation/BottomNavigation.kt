@@ -38,7 +38,9 @@ fun BottomNavigation(
             NavigationBarItem(
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route)
+                    if (currentRoute != item.route){
+                        navController.navigate(item.route)
+                    }
                 },
                 icon = {
                     Icon(

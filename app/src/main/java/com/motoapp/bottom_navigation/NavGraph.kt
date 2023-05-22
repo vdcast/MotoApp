@@ -17,9 +17,9 @@ import com.motoapp.catalog_navigation.KtmScreen
 fun NavGraph(
     navHostController: NavHostController
 ) {
-    NavHost(navController = navHostController, startDestination = "catalogHome"){
+    NavHost(navController = navHostController, startDestination = "screen_1"){
         composable("screen_1"){
-            BottomScreen1()
+            CatalogHomeScreen(navHostController)
         }
         composable("screen_2"){
             BottomScreen2()
