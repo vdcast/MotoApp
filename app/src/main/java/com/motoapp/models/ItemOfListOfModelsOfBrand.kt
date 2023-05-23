@@ -1,6 +1,6 @@
 package com.motoapp.models
 
-class ListOfModelsOfBrand(
+class ItemOfListOfModelsOfBrand(
     val title: String,
     val route: String
 )

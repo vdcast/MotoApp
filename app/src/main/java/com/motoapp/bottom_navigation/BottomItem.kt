@@ -1,6 +1,5 @@
 package com.motoapp.bottom_navigation
 
-import androidx.compose.material.icons.Icons
 import com.motoapp.R
 
 sealed class BottomItem(val title: String, val iconId: Int, val route: String){
