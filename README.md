@@ -29,6 +29,9 @@ Here you will see information
 List of your friends in this app.
 You can add to friends. See their bikes, invite for a ride your friend and setup some location or choose from your Saved locations.
 
+Enduro screen of rides will be from Button on this screen.
+You can start enduro trip ride and your phone will track your ride, so you can see where you've been, where is your friend now and how to meet again in this wild deep forest :)
+
 **Screen 4**: *Your profile of user.*
 
 In User Profile screen you will see:
@@ -98,3 +101,8 @@ Moto-Catalog:
 - *Fuel Tank Capacity*
 
 **OTHER SPECIFICATIONS**
+
+
+**Future features**
+
+Here is how it should looks like :) Have a fun!
