@@ -8,7 +8,9 @@ import com.motoapp.catalog_navigation.BikeDetailsScreen
 import com.motoapp.catalog_navigation.ByBrandScreen
 import com.motoapp.catalog_navigation.ByTypeScreen
 import com.motoapp.catalog_navigation.CatalogHomeScreen
+import com.motoapp.catalog_navigation.Ktm250SX2024Screen
 import com.motoapp.catalog_navigation.Ktm250SXF2024Screen
+import com.motoapp.catalog_navigation.Ktm300SX2024Screen
 import com.motoapp.catalog_navigation.Ktm350SXF2024Screen
 import com.motoapp.catalog_navigation.Ktm450SXFFactoryEdition2024Screen
 import com.motoapp.catalog_navigation.KtmScreen
@@ -52,11 +54,17 @@ fun NavGraph(
         composable("ktm250SXF2024"){
             Ktm250SXF2024Screen(navHostController)
         }
-        composable("ktm450SXFFactoryEdition2024"){
+        composable("ktm450SXFFactoryEdition2024", ){
             Ktm450SXFFactoryEdition2024Screen(navHostController)
         }
         composable("ktm125SX2024"){
             BikeDetailsScreen(navHostController, ItemBikeDescription.Ktm125SX2024)
+        }
+        composable("ktm250SX2024"){
+            Ktm250SX2024Screen(navHostController)
+        }
+        composable("ktm300SX2024"){
+            Ktm300SX2024Screen(navHostController)
         }
     }
 }

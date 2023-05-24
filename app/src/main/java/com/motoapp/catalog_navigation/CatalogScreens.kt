@@ -1,26 +1,55 @@
 package com.motoapp.catalog_navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.motoapp.models.ItemOfListOfModelsOfBrand
 import com.motoapp.ui.theme.Green04
+import com.motoapp.ui.theme.Green08
 import com.motoapp.ui.theme.Green30
 import com.motoapp.ui.theme.Green50
+import androidx.compose.ui.unit.IntOffset
 
 //ScreenCatalogHome: CatalogItem("catalogHome")
 //    object ScreenByType: CatalogItem("catalogByType")
@@ -231,7 +260,9 @@ fun KtmScreen(navController: NavController) {
                 )
             ) {index, item ->
                 OutlinedButton(
-                    onClick = { navController.navigate(item.route) },
+                    onClick = {
+                        navController.navigate(item.route)
+                    },
                     modifier = Modifier
                         .fillMaxWidth(0.75f),
                     elevation = ButtonDefaults.buttonElevation(8.dp),
@@ -260,6 +291,10 @@ fun KtmScreen(navController: NavController) {
                 OutlinedButton(
                     onClick = {
                         if (item.title === "125 SX 2024"){
+                            navController.navigate(item.route)
+                        } else if (item.title === "300 SX 2024") {
+                            navController.navigate(item.route)
+                        } else if (item.title === "250 SX 2024") {
                             navController.navigate(item.route)
                         } else {
                             navController.popBackStack()
@@ -398,44 +433,193 @@ fun Ktm250SXF2024Screen(navController: NavController) {
 
 @Composable
 fun Ktm450SXFFactoryEdition2024Screen(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .padding(bottom = 80.dp)
-            .fillMaxSize()
-            .background(Green04),
-        contentAlignment = Alignment.Center
-    ){
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+    Column() {
+        AnimatedVisibility(
+            visible = true,
+            enter = fadeIn() + slideInVertically(initialOffsetY = { 24 }),
+            exit = fadeOut() + slideOutVertically(targetOffsetY = { 12 }),
         ) {
-            item {
-                Text(
-                    text = "KTM 450 SX-F FACTORY EDITION 2023",
-                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                )
-            }
-            item {
-                AsyncImage(
-                    model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_M23-450-SX-F-FactoryEdition-90-Degree-Right_%23SALL_%23AEPI_%23V1.png",
-                    contentDescription = null,
-                )
-            }
-
-            item {
-                OutlinedButton(
-                    onClick = { navController.popBackStack() },
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .padding(top = 8.dp, bottom = 16.dp),
-                    elevation = ButtonDefaults.buttonElevation(8.dp),
-                    colors = ButtonDefaults.elevatedButtonColors(Green50)
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 80.dp)
+                    .fillMaxSize()
+                    .background(Green04),
+                contentAlignment = Alignment.Center
+            ){
+                LazyColumn(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Back")
-                }
-            }
+                    item {
+                        Text(
+                            text = "KTM 450 SX-F FACTORY EDITION 2023",
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                    }
+                    item {
+                        AsyncImage(
+                            model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_M23-450-SX-F-FactoryEdition-90-Degree-Right_%23SALL_%23AEPI_%23V1.png",
+                            contentDescription = null,
+                        )
+                    }
 
+                    item {
+                        OutlinedButton(
+                            onClick = { navController.popBackStack() },
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .padding(top = 8.dp, bottom = 16.dp),
+                            elevation = ButtonDefaults.buttonElevation(8.dp),
+                            colors = ButtonDefaults.elevatedButtonColors(Green50)
+                        ) {
+                            Text(text = "Back")
+                        }
+                    }
+
+                }
+
+            }
         }
 
     }
+
+}
+
+
+
+@Composable
+fun Ktm300SX2024Screen(navController: NavController) {
+
+    var showCard = remember { mutableStateOf<Boolean>(false)}
+
+
+
+
+    Column() {
+        AnimatedVisibility(
+            visible = showCard.value,
+            enter = fadeIn() + slideInVertically(initialOffsetY = { it })
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 80.dp)
+                    .fillMaxSize()
+                    .background(Green04),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(16.dp),
+                    elevation = CardDefaults.cardElevation(4.dp),
+                    colors = CardDefaults.cardColors(Green08)
+                ) {
+                    LazyColumn(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        item {
+                            Text(
+                                text = "KTM 300 SX 2024",
+                                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                            )
+                        }
+                        item {
+                            AsyncImage(
+                                model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_MY24-KTM-300-SX-90-right-Studio_%23SALL_%23AEPI_%23V1.png",
+                                contentDescription = null,
+                            )
+                        }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            OutlinedButton(
+                                onClick = { navController.popBackStack() },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(top = 8.dp, bottom = 16.dp),
+                                elevation = ButtonDefaults.buttonElevation(8.dp),
+                                colors = ButtonDefaults.elevatedButtonColors(Green50)
+                            ) {
+                                Text(text = "Back")
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        showCard.value = true
+    }
+
+}
+
+@Composable
+fun Ktm250SX2024Screen(navController: NavController) {
+
+    var showCard = remember { mutableStateOf<Boolean>(false) }
+
+
+
+
+    Column() {
+        AnimatedVisibility(
+            visible = showCard.value,
+            enter = fadeIn() + slideInHorizontally(initialOffsetX = { it })
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 80.dp)
+                    .fillMaxSize()
+                    .background(Green04),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(16.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    LazyColumn(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        item {
+                            Text(
+                                text = "KTM 250 SX 2024",
+                                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                            )
+                        }
+                        item {
+                            AsyncImage(
+                                model = "https://azwecdnepstoragewebsiteuploads.azureedge.net/PHO_BIKE_90_RE_MY24-KTM-250-SX-90-right-Studio_%23SALL_%23AEPI_%23V1.png",
+                                contentDescription = null,
+                            )
+                        }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            OutlinedButton(
+                                onClick = { navController.popBackStack() },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(top = 8.dp, bottom = 16.dp),
+                                elevation = ButtonDefaults.buttonElevation(8.dp),
+                                colors = ButtonDefaults.elevatedButtonColors(Green50)
+                            ) {
+                                Text(text = "Back")
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        showCard.value = true
+    }
+
 }
